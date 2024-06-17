@@ -80,21 +80,19 @@ TEMPLATES = [
 WSGI_APPLICATION = 'pathonout.wsgi.application'
 
 # Set the GDAL_LIBRARY_PATH to the location of libgdal.so.30
-GDAL_LIBRARY_PATH = '/usr/lib/libgdal.so.30'
-# Add the GDAL_LIBRARY_PATH to the environment variables
+GDAL_LIBRARY_PATH = config('GDAL_LIBRARY_PATH', default='/usr/lib/libgdal.so.30')
 os.environ['GDAL_LIBRARY_PATH'] = GDAL_LIBRARY_PATH
 
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
+# Database configuration
 DATABASES = {
     'default': dj_database_url.config(
-        # Use environment variables for your local development
         default=f'postgresql://{config("DB_USER")}:{config("DB_PASSWORD")}@{config("DB_HOST")}:{config("DB_PORT")}/{config("DB_NAME")}',
         conn_max_age=600,
-        engine='django.contrib.gis.db.backends.postgis'  # Ensure the use of PostGIS engine
+        engine='django.contrib.gis.db.backends.postgis'
     )
 }
+
+SECRET_KEY = config('SECRET_KEY')
 
 
 

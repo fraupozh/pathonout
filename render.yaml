@@ -2,7 +2,7 @@ databases:
   - name: mymapdb
     plan: free
     databaseName: mymap
-    user: postgres
+    user: mymap_user  # Custom user name
 
 services:
   - type: web
@@ -22,3 +22,4 @@ services:
         value: 4
       - key: GDAL_LIBRARY_PATH
         value: /usr/lib/libgdal.so.30
+
