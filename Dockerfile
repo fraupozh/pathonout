@@ -19,16 +19,15 @@ COPY ./requirements.txt /usr/src/app/
 RUN pip install --upgrade pip \
     && pip install -r requirements.txt
 
-# Copy project files into the working directory
-COPY . /usr/src/app/
+# Copy project files into the container
+COPY . .
 
-# Ensure the static files directory is writable
-RUN mkdir -p /usr/src/app/static
-RUN chmod -R 755 /usr/src/app/static
+# Create the staticfiles directory and set permissions
+RUN mkdir -p /usr/src/app/staticfiles
+RUN chmod -R 755 /usr/src/app/staticfiles
 
-# Expose port 8000 to the outside world
-EXPOSE 8000
+# Run collectstatic during build
+RUN python manage.py collectstatic --noinput
 
-# Command to run the application
-CMD ["gunicorn", "pathonout.asgi:application", "-k", "uvicorn.workers.UvicornWorker"]
-
+# Define the command to run your application
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
