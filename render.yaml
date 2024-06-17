@@ -7,6 +7,9 @@ services:
   - type: web
     plan: free
     name: pathonout
+    runtime: python
+    buildCommand: "./build.sh"  # Adjust build command as necessary
+    startCommand: "gunicorn pathonout.asgi:application -k uvicorn.workers.UvicornWorker"  # Adjust start command as necessary
     envVars:
       - key: DATABASE_URL
         fromDatabase:
@@ -18,5 +21,3 @@ services:
         value: 4
       - key: GDAL_LIBRARY_PATH
         value: /usr/lib/libgdal.so.30
-    dockerfile: Dockerfile  # Specify the Dockerfile to use for building the container
-
