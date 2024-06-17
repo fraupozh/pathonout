@@ -132,7 +132,7 @@ STATIC_URL = 'static/'
 
 # Tell Django to collect static files to a specific directory when using collectstatic.
 # This directory will be mounted as a volume or served directly by your web server.
-STATIC_ROOT = '/usr/src/app/staticfiles/'
+STATIC_ROOT = 'usr/src/app/staticfiles/'
 
 # This production code might break development mode, so we check whether we're in DEBUG mode
 if not DEBUG:
