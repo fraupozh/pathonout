@@ -1,0 +1,24 @@
+databases:
+  - name: mymapdb
+    plan: free
+    databaseName: mymap
+    user: postgres
+
+services:
+  - type: web
+    plan: free
+    name: pathonout
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn pathonout.asgi:application -k uvicorn.workers.UvicornWorker"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: mymapdb
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
+      - key: GDAL_LIBRARY_PATH
+        value: /usr/lib/libgdal.so.30
