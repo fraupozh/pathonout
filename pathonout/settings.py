@@ -9,7 +9,9 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+import os
+from decouple import config
+import dj_database_url
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -48,6 +50,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -76,26 +79,23 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pathonout.wsgi.application'
 
-import os
-
 # Set the GDAL_LIBRARY_PATH to the location of libgdal.so.30
 GDAL_LIBRARY_PATH = '/usr/lib/libgdal.so.30'
-
 # Add the GDAL_LIBRARY_PATH to the environment variables
 os.environ['GDAL_LIBRARY_PATH'] = GDAL_LIBRARY_PATH
+
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.contrib.gis.db.backends.postgis",
-        "HOST": config('DB_HOST'),        
-        "NAME": config('DB_NAME'),              
-        "USER": config('DB_USER'),           
-        "PASSWORD": config('DB_PASSWORD'), 
-        "PORT": config('DB_PORT', cast=int),                 
-    }
+    'default': dj_database_url.config(
+        # Use environment variables for your local development
+        default=f'postgresql://{config("DB_USER")}:{config("DB_PASSWORD")}@{config("DB_HOST")}:{config("DB_PORT")}/{config("DB_NAME")}',
+        conn_max_age=600,
+        engine='django.contrib.gis.db.backends.postgis'  # Ensure the use of PostGIS engine
+    )
 }
+
 
 
 # Password validation
@@ -133,6 +133,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# This production code might break development mode, so we check whether we're in DEBUG mode
+if not DEBUG:
+    # Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    # Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
+    # and renames the files with unique names for each version to support long-term caching
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
