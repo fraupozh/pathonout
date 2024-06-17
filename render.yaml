@@ -2,8 +2,6 @@ databases:
   - name: mymapdb
     plan: free
     databaseName: mymap
-    user: mymap_user
-    password: mysecretpassword
 
 services:
   - type: web
