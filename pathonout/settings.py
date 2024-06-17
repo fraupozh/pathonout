@@ -79,19 +79,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pathonout.wsgi.application'
 
-# Set the GDAL_LIBRARY_PATH to the location of libgdal.so.30
+# Set the GDAL_LIBRARY_PATH to the location of libgdal.so.30 from the environment variable
 GDAL_LIBRARY_PATH = config('GDAL_LIBRARY_PATH', default='/usr/lib/libgdal.so.30')
 os.environ['GDAL_LIBRARY_PATH'] = GDAL_LIBRARY_PATH
 
-# Database configuration
+# Database configuration using dj-database-url and environment variables
 DATABASES = {
     'default': dj_database_url.config(
-        default=f'postgresql://{config("DB_USER")}:{config("DB_PASSWORD")}@{config("DB_HOST")}:{config("DB_PORT")}/{config("DB_NAME")}',
+        default=config('DATABASE_URL'),
         conn_max_age=600,
         engine='django.contrib.gis.db.backends.postgis'
     )
 }
 
+# Secret key from environment variable
 SECRET_KEY = config('SECRET_KEY')
 
 
