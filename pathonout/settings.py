@@ -79,18 +79,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pathonout.wsgi.application'
 
-# Set the GDAL_LIBRARY_PATH to the location of libgdal.so.30 from the environment variable
-GDAL_LIBRARY_PATH = config('GDAL_LIBRARY_PATH', default='/usr/lib/libgdal.so.30')
-os.environ['GDAL_LIBRARY_PATH'] = GDAL_LIBRARY_PATH
-
-# Database configuration using dj-database-url and environment variables
 DATABASES = {
     'default': dj_database_url.config(
         default=config('DATABASE_URL'),
-        conn_max_age=600,
-        engine='django.contrib.gis.db.backends.postgis'
+        conn_max_age=600
     )
 }
+
+# Ensure the use of PostGIS engine
+DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+
 
 # Secret key from environment variable
 SECRET_KEY = config('SECRET_KEY')
@@ -132,6 +130,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Tell Django to collect static files to a specific directory when using collectstatic.
+# This directory will be mounted as a volume or served directly by your web server.
+STATIC_ROOT = '/usr/src/app/staticfiles/'
 
 # This production code might break development mode, so we check whether we're in DEBUG mode
 if not DEBUG:
