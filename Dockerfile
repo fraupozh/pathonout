@@ -22,9 +22,9 @@ RUN pip install --upgrade pip \
 # Copy project files into the working directory
 COPY . /usr/src/app/
 
-# Run migrations and collect static files (if necessary)
-# RUN python manage.py migrate
-# RUN python manage.py collectstatic --no-input
+# Ensure the static files directory is writable
+RUN mkdir -p /usr/src/app/static
+RUN chmod -R 755 /usr/src/app/static
 
 # Expose port 8000 to the outside world
 EXPOSE 8000
