@@ -20,16 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-from decouple import config
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'pathonout.onrender.com']
-
+DEBUG = config('DEBUG', default=False, cast=bool)
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
 
 # Application definition
 
@@ -81,16 +77,10 @@ WSGI_APPLICATION = 'pathonout.wsgi.application'
 DATABASES = {
     'default': dj_database_url.config(
         default=config('DATABASE_URL'),
-        conn_max_age=600
+        conn_max_age=600,
+        engine='django.contrib.gis.db.backends.postgis'  # Ensure PostGIS engine
     )
 }
-
-# Ensure the use of PostGIS engine
-DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
-
-
-# Secret key from environment variable
-SECRET_KEY = config('SECRET_KEY')
 
 
 
