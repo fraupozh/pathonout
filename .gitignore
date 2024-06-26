@@ -70,10 +70,6 @@ coverage.xml
 *.mo
 *.pot
 
-# Django static files
-staticfiles/
-static/
-
 # Django media files
 media/
 
@@ -99,3 +95,4 @@ media/
 Thumbs.db
 ehthumbs.db
 *.stackdump
+data/

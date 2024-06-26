@@ -2,15 +2,14 @@ databases:
   - name: mymapdb
     plan: free
     databaseName: mymap
-    user: postgres
 
 services:
   - type: web
     plan: free
     name: pathonout
     runtime: python
-    buildCommand: "./build.sh"
-    startCommand: "gunicorn pathonout.asgi:application -k uvicorn.workers.UvicornWorker"
+    buildCommand: "./build.sh"  # Adjust build command as necessary
+    startCommand: "gunicorn pathonout.asgi:application -k uvicorn.workers.UvicornWorker"  # Adjust start command as necessary
     envVars:
       - key: DATABASE_URL
         fromDatabase:

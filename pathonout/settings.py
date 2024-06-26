@@ -14,23 +14,18 @@ from decouple import config
 import dj_database_url
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
+# Define the base directory for static files
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
-from decouple import config
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
+DEBUG = config('DEBUG', default=False, cast=bool)
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
 
 # Application definition
 
@@ -79,20 +74,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pathonout.wsgi.application'
 
-# Set the GDAL_LIBRARY_PATH to the location of libgdal.so.30
-GDAL_LIBRARY_PATH = '/usr/lib/libgdal.so.30'
-# Add the GDAL_LIBRARY_PATH to the environment variables
-os.environ['GDAL_LIBRARY_PATH'] = GDAL_LIBRARY_PATH
-
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
 DATABASES = {
     'default': dj_database_url.config(
-        # Use environment variables for your local development
-        default=f'postgresql://{config("DB_USER")}:{config("DB_PASSWORD")}@{config("DB_HOST")}:{config("DB_PORT")}/{config("DB_NAME")}',
+        default=config('DATABASE_URL'),
         conn_max_age=600,
-        engine='django.contrib.gis.db.backends.postgis'  # Ensure the use of PostGIS engine
+        engine='django.contrib.gis.db.backends.postgis'  # Ensure PostGIS engine
     )
 }
 
@@ -133,6 +119,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Tell Django to collect static files to a specific directory when using collectstatic.
+# This directory will be mounted as a volume or served directly by your web server.
+STATIC_ROOT = 'usr/src/app/staticfiles/'
 
 # This production code might break development mode, so we check whether we're in DEBUG mode
 if not DEBUG:
