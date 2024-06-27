@@ -6,7 +6,10 @@ set -o errexit
 pip install -r requirements.txt
 
 # Enable setting superuser credentials as environmental variables
-python manage.py createsuperuser --no-input
+if [[ $CREATE_SUPERUSER ]];
+then
+  python world_champ_2022/manage.py createsuperuser --no-input
+fi
 
 # Convert static asset files
 python manage.py collectstatic --no-input
