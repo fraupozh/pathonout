@@ -59,11 +59,5 @@ This URL returns the JSON data that the backend sends to the frontend.
 
 - **main:** This branch is used for local development and contains the latest stable version of the application.
   
-- **DB_name:** Changes pushed to this branch are automatically deployed to render.com. It represents the stable version of the application available at [https://pathonout.onrender.com/labs/map/](https://pathonout.onrender.com/labs/map/).
+- **render-prod:** Changes pushed to this branch are automatically deployed to render.com. It represents the stable version of the application available at [https://pathonout.onrender.com/labs/map/](https://pathonout.onrender.com/labs/map/).
 
-### Branch Naming Strategy
-
-We maintain two main branches:
-
-- **main:** for local development and active feature development.
-- **DB_name:** for automatic deployments to render.com. Changes pushed here are deployed to [https://pathonout.onrender.com/labs/map/](https://pathonout.onrender.com/labs/map/).
