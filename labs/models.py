@@ -1,4 +1,5 @@
 from django.contrib.gis.db import models
+from django.contrib.gis.geos import Point
 
 
 class Marker(models.Model):
@@ -16,6 +17,7 @@ class Isolate(models.Model):
     host_organism_environment = models.CharField(max_length=255)
     acquisition_date = models.DateField()
     analysis_date = models.DateField()
+    collection_location = models.PointField(default=Point(12.29930390893049, 51.2893266723523)) # random Leipzig coordinates =)
 
     def __str__(self):
         return f"{self.species} - {self.ID} ({self.marker.name})"
