@@ -1,18 +1,25 @@
 #!/usr/bin/env bash
-# Exit on error
 set -o errexit
 
-# Modify this line as needed for your package manager (pip, poetry, etc.)
+# Install dependencies
 pip install -r requirements.txt
 
-# Enable setting superuser credentials as environmental variables
-if [[ $CREATE_SUPERUSER ]];
-then
-  python world_champ_2022/manage.py createsuperuser --no-input
+# Create superuser if needed
+if [[ $CREATE_SUPERUSER ]]; then
+    python world_champ_2022/manage.py createsuperuser --no-input
 fi
 
-# Convert static asset files
+# Collect static files
 python manage.py collectstatic --no-input
 
-# Apply any outstanding database migrations
-python manage.py migrate
+# Apply migrations explicitly
+python manage.py migrate --no-input
+
+# Restart services if needed (optional, depends on your deployment platform)
+# systemctl restart your_application_service
+
+# Additional commands as needed
+# ...
+
+# Exit successfully
+exit 0

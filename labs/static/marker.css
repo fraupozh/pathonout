@@ -1,0 +1,78 @@
+/* Global Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 20px;
+    background-color: #f0f0f0; /* Light gray background */
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #24709a; /* Dark blue */
+    font-size: 2rem; /* 30px */
+}
+
+label {
+    font-size: 1rem; /* 16px */
+    margin-right: 10px;
+    color: #24709a; /* Dark blue */
+}
+
+select {
+    padding: 8px; /* Reduced padding */
+    font-size: 1rem; /* 16px */
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft box shadow */
+}
+
+thead {
+    background-color: #4d97c9; /* Dark blue */
+    color: #f1f1e7; /* Light gray text */
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #f4f4f4; /* Light gray */
+}
+
+tbody tr:hover {
+    background-color: #e0e0e0; /* Lighter gray on hover */
+}
+
+td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px; /* Limiting width for ellipsis */
+}
+
+@media (max-width: 768px) {
+    table {
+        font-size: 0.9rem; /* Adjust font size for smaller screens */
+    }
+}
+
+#download-button {
+    position: fixed; /* Use fixed position to keep it fixed relative to the viewport */
+    bottom: 20px; /* 20px from the bottom */
+    right: 30px; /* 30px from the right */
+    z-index: 1000; /* Ensure it's above other content */
+}
