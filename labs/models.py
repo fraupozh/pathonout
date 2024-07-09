@@ -17,7 +17,7 @@ class Sample(models.Model):
     #host_organism_environment = models.CharField(max_length=255)
     acquisition_date = models.DateField()
     sampling_date = models.DateField()
-    collection_location = models.PointField(8.4374112043276952, 49.473407465381484) # random Europe coordinates =)
+    collection_location = models.PointField() # random Europe coordinates =)
 
     def __str__(self):
         return f"{self.sample_type} - {self.ID} ({self.marker.name})"
