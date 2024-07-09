@@ -25,7 +25,7 @@ map
 
 async function loadMarkersOrIsolates(type) {
   try {
-    const url = `/api/${type}/?in_bbox=${map.getBounds().toBBoxString()}`;
+    const url = `/api/markers/?in_bbox=${map.getBounds().toBBoxString()}`;
     const response = await fetch(url);
     const geojson = await response.json();
     return geojson;
@@ -37,14 +37,14 @@ async function loadMarkersOrIsolates(type) {
 
 // Initialize layer groups for markers and isolates
 const markerLayerGroup = L.layerGroup().addTo(map);
-const isolateLayerGroup = L.layerGroup().addTo(map);
+const sampleLayerGroup = L.layerGroup().addTo(map);
 
 // Function to render markers or isolates on the map
 async function renderData(data, selectedType) {
   if (data) {
     if (selectedType === "markers") {
       // Clear previous isolates layer
-      isolateLayerGroup.clearLayers();
+      sampleLayerGroup.clearLayers();
 
       L.geoJSON(data, {
         onEachFeature: function (feature, layer) {
@@ -59,40 +59,36 @@ async function renderData(data, selectedType) {
         }
       }).addTo(markerLayerGroup);
 
-    } else if (selectedType === "isolates") {
-      
-
+    } else if (selectedType === "samples") {
       // Clear previous markers layer
       markerLayerGroup.clearLayers();
   
-      data.forEach(isolate => {
-        const coordinates = isolate.collection_location.coordinates;
-        const isolateInfo = isolate; // Directly use the isolate object for properties
-      
+      data.features.forEach(feature => {
+        const samples = feature.properties.samples;
+        samples.forEach(sample => {
+          const coordinates = sample.collection_location.coordinates;
 
-        const isolateMarker = L.marker([coordinates[1], coordinates[0]])
-            .bindPopup(`<b>Isolate Information</b><br>
-                        Species: ${isolateInfo.species}<br>
-                        ID: ${isolateInfo.ID}<br>
-                        Isolation Source: ${isolateInfo.isolation_source}<br>
-                        Host Organism/Environment: ${isolateInfo.host_organism_environment}<br>
-                        Acquisition Date: ${isolateInfo.acquisition_date}<br>
-                        Analysis Date: ${isolateInfo.analysis_date}`)
-            .addTo(markerLayerGroup);
+          const sampleMarker = L.marker([coordinates[1], coordinates[0]])
+              .bindPopup(`<b>Sample Information</b><br>
+                          ID: ${sample.ID}<br>
+                          Sample Type: ${sample.sample_type}<br>
+                          Acquisition Date: ${sample.acquisition_date}<br>
+                          Sampling Date: ${sample.sampling_date}`)
+              .addTo(sampleLayerGroup);
 
-        isolateMarker.on('click', function () {
-            const isolateId = isolateInfo.ID; // Assuming isolate ID is available in properties
-            window.location.href = `/labs/isolate_detail/?id=${isolateId}`;
-            console.log('Fetching data for isolate ID:', isolateId);
+          // sampleMarker.on('click', function () {
+          //     const sampleId = sample.ID; // Assuming isolate ID is available in properties
+          //     window.location.href = `/labs/sample_detail/?id=${sampleId}`;
+          //     console.log('Fetching data for sample ID:', sampleId);
+          // });
+
+          sampleMarker.on('mouseover', function () {
+              this.openPopup();
+          });
+          
         });
-
-        isolateMarker.on('mouseover', function () {
-            this.openPopup();
-        });
-         
-      });
-    }  
-    
+      } );
+    }
   }
 }
 
@@ -101,14 +97,14 @@ async function loadAndRender() {
 
   // Clear previous data on the map
   markerLayerGroup.clearLayers();
-  isolateLayerGroup.clearLayers();
+  sampleLayerGroup.clearLayers();
 
   // Load and render the selected type of data
   const data = await loadMarkersOrIsolates(selectedType);
   if (selectedType === "markers") {
     renderData(data, "markers");
-  } else if (selectedType === "isolates") {
-    renderData(data, "isolates");
+  } else if (selectedType === "samples") {
+    renderData(data, "samples");
   }
 }
 
