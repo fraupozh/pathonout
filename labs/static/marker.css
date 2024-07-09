@@ -40,7 +40,7 @@ thead {
 }
 
 th, td {
-    padding: 12px;
+    padding: 10px;
     border: 1px solid #ddd;
     text-align: left;
 }
@@ -68,4 +68,11 @@ td {
     table {
         font-size: 0.9rem; /* Adjust font size for smaller screens */
     }
+}
+
+#download-button {
+    position: fixed; /* Use fixed position to keep it fixed relative to the viewport */
+    bottom: 20px; /* 20px from the bottom */
+    right: 30px; /* 30px from the right */
+    z-index: 1000; /* Ensure it's above other content */
 }

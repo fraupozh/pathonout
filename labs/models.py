@@ -9,15 +9,15 @@ class Marker(models.Model):
     def __str__(self):
         return self.name
 
-class Isolate(models.Model):
-    marker = models.ForeignKey(Marker, related_name='isolates', on_delete=models.CASCADE)
-    species = models.CharField(max_length=255)
+class Sample(models.Model):
+    marker = models.ForeignKey(Marker, related_name='samples', on_delete=models.CASCADE)
+    #species = models.CharField(max_length=255)
     ID = models.CharField(max_length=50)
-    isolation_source = models.CharField(max_length=255)
-    host_organism_environment = models.CharField(max_length=255)
+    sample_type = models.CharField(max_length=255)
+    #host_organism_environment = models.CharField(max_length=255)
     acquisition_date = models.DateField()
-    analysis_date = models.DateField()
+    sampling_date = models.DateField()
     collection_location = models.PointField() # random Leipzig coordinates =)
 
     def __str__(self):
-        return f"{self.species} - {self.ID} ({self.marker.name})"
+        return f"{self.sample_type} - {self.ID} ({self.marker.name})"

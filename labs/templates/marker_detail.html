@@ -19,26 +19,26 @@
       type="text/css"
       href="{% static 'marker.css' %}"
     /> 
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 </head>
 <body>
-  <h1 id="supplier-name">Isolates for {{ supplier }}</h1>
-    <label for="isolates-select">Select Isolate: </label>
-    <select id="isolates-select"></select>
+  <h1 id="supplier-name"> {{ supplier }}</h1>
+    <label for="samples-select">Select Sample: </label>
+    <select id="samples-select"></select>
 
-    <table id="isolates-table">
+    <button id="download-button">Download</button>
+
+    <table id="samples-table">
         <thead>
             <tr>
-              <th data-column="isolation_source">Isolation Source</th>
+              <th></th>
+              <th data-column="sample_type">Sample Type</th>
               <th data-column="ID">ID</th>
-              <th data-column="species">Species</th>
-              <th data-column="host_organism_environment">Host Organism/Environment</th>
               <th data-column="acquisition_date">Acquisition Date</th>
-              <th data-column="analysis_date">Analysis Date</th>
+              <th data-column="sampling_date">Sampling Date</th>
             </tr>
         </thead>
         <tbody>
-          
         </tbody>
     </table>
     <!-- Load the static files -->

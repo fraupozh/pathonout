@@ -2,20 +2,18 @@
 
 from rest_framework import serializers
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
-from .models import Marker, Isolate
+from .models import Marker, Sample
 
-class IsolateSerializer(serializers.ModelSerializer):
+class SampleSerializer(serializers.ModelSerializer):
     collection_location = serializers.SerializerMethodField()
 
     class Meta:
-        model = Isolate
+        model = Sample
         fields = (
-            'species',
             'ID',
-            'isolation_source',
-            'host_organism_environment',
+            'sample_type',
             'acquisition_date',
-            'analysis_date',
+            'sampling_date',
             'collection_location',
         )
     
@@ -26,9 +24,9 @@ class IsolateSerializer(serializers.ModelSerializer):
         }
 
 class MarkerSerializer(GeoFeatureModelSerializer):
-    isolates = IsolateSerializer(many=True, read_only=True)
+    samples = SampleSerializer(many=True, read_only=True)
 
     class Meta:
         model = Marker
         geo_field = 'location'
-        fields = ('id', 'name', 'location', 'isolates')   
+        fields = ('id', 'name', 'location', 'samples') 
