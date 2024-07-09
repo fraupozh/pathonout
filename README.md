@@ -46,6 +46,14 @@ To set up the database using Docker:
     \dx
     ```
 
+### Run the App Locally
+
+To run the app locally using Gunicorn with UvicornWorker:
+
+```bash
+python -m gunicorn pathonout.asgi:application -k uvicorn.workers.UvicornWorker
+```
+
 ### Frontend Development
 
 For frontend developers who need to download JSON data, you can access the JSON file provided by the backend by running the application and navigating to the following URL:
@@ -59,5 +67,5 @@ This URL returns the JSON data that the backend sends to the frontend.
 
 - **main:** This branch is used for local development and contains the latest stable version of the application.
   
-- **render-prod:** Changes pushed to this branch are automatically deployed to render.com. It represents the stable version of the application available at [https://pathonout.onrender.com/labs/map/](https://pathonout.onrender.com/labs/map/).
+- **render-stable:** Changes pushed to this branch are automatically deployed to render.com. It represents the stable version of the application available at [https://pathonout.onrender.com/labs/map/](https://pathonout.onrender.com/labs/map/).
 
