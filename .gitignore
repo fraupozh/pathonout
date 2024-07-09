@@ -71,8 +71,8 @@ coverage.xml
 *.pot
 
 # Django static files
-staticfiles/
-static/
+# staticfiles/
+# static/
 
 # Django media files
 media/
