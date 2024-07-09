@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Marker Detail</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://unpkg.com/leaflet/dist/leaflet.css"
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet/dist/leaflet.js"
+      crossorigin=""
+    ></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'marker.css' %}"
+    /> 
+
+</head>
+<body>
+  <h1 id="supplier-name">Isolates for {{ supplier }}</h1>
+    <label for="isolates-select">Select Isolate: </label>
+    <select id="isolates-select"></select>
+
+    <table id="isolates-table">
+        <thead>
+            <tr>
+              <th data-column="isolation_source">Isolation Source</th>
+              <th data-column="ID">ID</th>
+              <th data-column="species">Species</th>
+              <th data-column="host_organism_environment">Host Organism/Environment</th>
+              <th data-column="acquisition_date">Acquisition Date</th>
+              <th data-column="analysis_date">Analysis Date</th>
+            </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>
+    </table>
+    <!-- Load the static files -->
+    <script src="{% static 'marker.js' %}"></script>
+
+</body>
+</html>
