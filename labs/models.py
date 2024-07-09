@@ -20,5 +20,5 @@ class Sample(models.Model):
     collection_location = models.PointField() # random Leipzig coordinates =)
 
     def __str__(self):
-        return f"{self.species} - {self.ID} ({self.marker.name})"
+        return f"{self.sample_type} - {self.ID} ({self.marker.name})"
 
