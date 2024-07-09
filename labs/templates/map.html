@@ -11,7 +11,7 @@
       rel="stylesheet"
       type="text/css"
       href="{% static 'map.css' %}"
-    />
+    /> 
     <link
       rel="stylesheet"
       type="text/css"
@@ -24,6 +24,13 @@
     ></script>
   </head>
   <body>
+    <div id="controls">
+      <label for="dataSelect" class="control-label">Show:</label>
+      <select id="dataSelect" onchange="loadAndRender()" class="form-select">
+          <option value="markers">Laboratories</option>
+          <option value="isolates">Isolates</option>
+      </select>
+    </div>
     <div id="map"></div>
     <script
       src="{% static 'map.js' %}"

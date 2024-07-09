@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Isolate Detail</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://unpkg.com/leaflet/dist/leaflet.css"
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet/dist/leaflet.js"
+      crossorigin=""
+    ></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'marker.css' %}"
+    /> 
+
+</head>
+<body>
+    <h1>Isolate Details</h1>
+    <div id="isolate-details"></div>
+    <button id="download-csv">Download CSV</button>
+
+    <script src="{% static 'isolate.js' %}"></script>
+</body>
+</html>
